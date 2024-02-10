@@ -3,4 +3,13 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  optimizeDeps: {
+    include: ["@repo/logger", "@repo/utils"],
+  },
+
+  build: {
+    commonjsOptions: {
+      include: [/logger/, /utils/, /node_modules/],
+    },
+  },
 });
