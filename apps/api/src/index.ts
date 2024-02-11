@@ -6,11 +6,16 @@ import fastify from "fastify";
 import { createContext } from "./context";
 import { appRouter, type AppRouter } from "./router";
 import ws from "@fastify/websocket";
+import cors from "@fastify/cors";
 
 const server = fastify({
   maxParamLength: 5000,
 });
 void server.register(ws);
+void server.register(cors, {
+  credentials: true,
+  origin: "*",
+});
 void server.register(fastifyTRPCPlugin, {
   useWSS: true,
   prefix: "/trpc",
@@ -32,3 +37,5 @@ void (async () => {
     process.exit(1);
   }
 })();
+
+export type { AppRouter };
